@@ -22,9 +22,9 @@
         char-count (get (frequencies password)
                         c
                         0)]
-    (< (dec min)
+    (<= min
        char-count
-       (inc max))))
+       max)))
 
 (def data (slurp "resources/aoc_2020/day_2_1.txt"))
 
