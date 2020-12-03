@@ -1,5 +1,6 @@
 (ns aoc-2020.day2
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [clojure.test :refer [deftest is run-tests]]))
 
 (def toy-data "1-3 a: abcde
 1-3 b: cdefg
@@ -44,3 +45,9 @@
 (let [d data]
   (count (filter valid-password-v2? (parse d))))
 ;; => 451
+
+(deftest part-1
+  (is (= 422 (let [d data]
+               (count (filter valid-password? (parse d)))))))
+
+(run-tests)
