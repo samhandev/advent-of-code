@@ -13,12 +13,6 @@
 #...##....#
 .#..#...#.#")
 
-(let [s (str/split-lines toy-data)
-      depth (count s)
-      width (count (first s))
-      traversal [3 1]]
-  [width depth])
-
 (defn parse [s]
   (let [d (str/split-lines s)
         depth (count d)
