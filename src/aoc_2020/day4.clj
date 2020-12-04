@@ -1,7 +1,8 @@
 (ns aoc-2020.day4
-  (:require [clojure.string :as str]
-            [clojure.walk :as cw]
-            [clojure.test :refer [deftest is run-tests]]))
+  (:require [clojure.spec.alpha :as s]
+            [clojure.string :as str]
+            [clojure.test :refer [deftest is run-tests]]
+            [clojure.walk :as cw]))
 
 (def sample-data "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
 byr:1937 iyr:2017 cid:147 hgt:183cm
@@ -185,3 +186,29 @@ eyr:2022")
                   count))))
 
 (run-tests)
+
+(s/def ::byr byr?)
+(s/def ::iyr iyr?)
+(s/def ::eyr eyr?)
+(s/def ::hgt hgt?)
+(s/def ::hcl hcl?)
+(s/def ::ecl ecl?)
+(s/def ::pid pid?)
+(s/def ::cid string?)
+
+(s/def ::passport (s/keys :req-un [::byr
+                                   ::iyr
+                                   ::eyr
+                                   ::hgt
+                                   ::hcl
+                                   ::ecl
+                                   ::pid]
+                          :opt-un [::cid]))
+
+(s/valid? ::passport (first (parse sample-data)))
+
+(deftest part-2-spec
+  (is (= 186 (->> data
+                  parse
+                  (filter (partial s/valid? ::passport))
+                  count))))
