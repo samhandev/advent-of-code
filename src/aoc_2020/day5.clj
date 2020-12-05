@@ -1,10 +1,12 @@
 (ns aoc-2020.day5
-  (:require [aoc-2020.utils :as utils]
-            [clojure.string :as str]))
+  (:require [aoc-2020.day5 :refer [sample-data]]
+            [aoc-2020.utils :as utils]
+            [clojure.string :as str]
+            [clojure.test :refer [deftest is run-tests]]))
 
 (def sample-data "FBFBBFFRLR
 BFFFBBFRRR
-BFFFBBFRRR
+FFFBBBFRRR
 BBFFBBFRLL")
 
 (defn parse-line [l]
@@ -34,12 +36,21 @@ BBFFBBFRLL")
 
 (seat-numbers sample-data)
 
+(deftest sample-test-seats
+  (is (= [357 567 119 820]
+         (seat-numbers sample-data))))
+
 (def data (utils/load-data 2020 5))
 
-(->> data
-     (seat-numbers)
-     (apply max))
-;; => 976
+(defn max-seat [d]
+  (->> d
+       (seat-numbers)
+       (apply max)))
+
+(deftest part-1-max-seat
+  (is (= 976
+         (max-seat data))))
+
 
 (let [sorted-seats (sort (seat-numbers data))]
   (first
@@ -48,4 +59,19 @@ BBFFBBFRLL")
                (map (fn [x y] [x y])
                     sorted-seats
                     (rest sorted-seats)))))
-;; => [684 686]
+
+(defn missing-seat [d]
+  (let [sorted-seats (sort (seat-numbers d))]
+    (->> (map (fn [x y] [x y])
+              sorted-seats
+              (iterate inc (first sorted-seats)))
+         (drop-while (fn [[x y]] (= x y)))
+         first ;; first time they didn't match
+         second))) ;; second is the expected seat number
+
+(missing-seat data)
+
+(deftest part-2-missing-seat
+  (is (= 685 (missing-seat data))))
+
+(run-tests)
