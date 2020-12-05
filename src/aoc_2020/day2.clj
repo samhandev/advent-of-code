@@ -1,6 +1,7 @@
 (ns aoc-2020.day2
   (:require [clojure.string :as str]
-            [clojure.test :refer [deftest is run-tests]]))
+            [clojure.test :refer [deftest is run-tests]]
+            [aoc-2020.utils :as utils]))
 
 (def toy-data "1-3 a: abcde
 1-3 b: cdefg
@@ -26,7 +27,7 @@
        char-count
        max)))
 
-(def data (slurp "resources/aoc_2020/day_2_1.txt"))
+(def data (utils/load-data 2020 2))
 
 
 (let [d data]

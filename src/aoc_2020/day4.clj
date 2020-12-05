@@ -1,5 +1,6 @@
 (ns aoc-2020.day4
-  (:require [clojure.spec.alpha :as s]
+  (:require [aoc-2020.utils :as utils]
+            [clojure.spec.alpha :as s]
             [clojure.string :as str]
             [clojure.test :refer [deftest is run-tests]]
             [clojure.walk :as cw]
@@ -52,7 +53,7 @@ iyr:2011 ecl:brn hgt:59in")
 (let [passports (parse sample-data)]
   (map required-keys? passports))
 
-(def data (slurp "resources/aoc_2020/day_4.txt"))
+(def data (utils/load-data 2020 4))
 
 (let [passports (parse data)]
   (count (filter passport-valid? passports)))

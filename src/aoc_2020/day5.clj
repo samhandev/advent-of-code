@@ -1,5 +1,6 @@
 (ns aoc-2020.day5
-  (:require [clojure.string :as str]))
+  (:require [aoc-2020.utils :as utils]
+            [clojure.string :as str]))
 
 (def sample-data "FBFBBFFRLR
 BFFFBBFRRR
@@ -33,7 +34,7 @@ BBFFBBFRLL")
 
 (seat-numbers sample-data)
 
-(def data (slurp "resources/aoc_2020/day_5.txt"))
+(def data (utils/load-data 2020 5))
 
 (->> data
      (seat-numbers)

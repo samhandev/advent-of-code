@@ -1,4 +1,5 @@
-(ns aoc-2020.day1)
+(ns aoc-2020.day1
+  (:require [aoc-2020.utils :as utils]))
 
 (def toy-data "1721
 979
@@ -7,7 +8,7 @@
 675
 1456")
 
-(def data (slurp "resources/aoc_2020/day_1_1.txt"))
+(def data (utils/load-data 2020 1))
 
 (defn parse [s]
   (map (fn [x] (Integer/parseInt x))

@@ -1,5 +1,6 @@
 (ns aoc-2020.day3
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [aoc-2020.utils :as utils]))
 
 (def toy-data "..##.......
 #...#...#..
@@ -41,7 +42,7 @@
 (count-hit-trees (parse toy-data) [3 1])
 ;; => 7
 
-(def data (slurp "resources/aoc_2020/day_3_1.txt"))
+(def data (utils/load-data 2020 3))
 (count-hit-trees (parse data) [3 1])
 
 (def traversals [[1 1]
