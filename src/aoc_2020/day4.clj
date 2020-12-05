@@ -2,7 +2,8 @@
   (:require [clojure.spec.alpha :as s]
             [clojure.string :as str]
             [clojure.test :refer [deftest is run-tests]]
-            [clojure.walk :as cw]))
+            [clojure.walk :as cw]
+            [cheshire.core :as json]))
 
 (def sample-data "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
 byr:1937 iyr:2017 cid:147 hgt:183cm
@@ -212,3 +213,6 @@ eyr:2022")
                   parse
                   (filter (partial s/valid? ::passport))
                   count))))
+
+(json/parse-string "{\"test\": \"value\"}" keyword)
+
