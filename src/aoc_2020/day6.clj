@@ -63,3 +63,21 @@ b")
        (reduce +)
        ))
 ;; => 3392
+
+;; transducer version
+(defn xf-with [num-in-group]
+  (comp
+   (map #(assoc (frequencies %) :num-in-group (num-in-group %)))
+   (map #(dissoc % \newline))
+   (map #(dissoc (into {} (filter (fn [[_ v]]
+                                    (= v (:num-in-group %)))
+                                  %))
+                 :num-in-group))
+   (map #(count %)))
+  )
+
+(let [s data
+      num-in-group (fn [g] (count (str/split-lines g)))
+      xf (xf-with num-in-group)]
+  (transduce xf + (str/split s #"\n\n")))
+;; => 3392
