@@ -54,16 +54,6 @@ acc +6")
 (iterate-till-loop (parse data))
 ;; => 1654
 
-(def sample-data-fixed "nop +0
-acc +1
-jmp +4
-acc +3
-jmp -3
-acc -99
-acc +1
-nop -4
-acc +6")
-
 (defn get-index-ops [d]
   (filter (fn [[_ op]] (#{"jmp" "nop"} op))
           (map-indexed (fn [idx [op _]] [idx op])
@@ -86,11 +76,21 @@ acc +6")
              [index]
              (fn [oper] (switch-op oper))))
 
-
+;; messy version
 (let [d (parse data)
       indexed-ops (get-index-ops d)]
   (loop [data d
          ops indexed-ops]
     (cond (finished? (memorized-fn (try-other data (first ops)))) (:value (memorized-fn (try-other data (first ops))))
           :else (recur d (rest ops)))))
+;; => 833
 
+;; map filter version
+(let [d (parse data)
+      indexed-ops (get-index-ops d)]
+  (->> (map (fn [ops]
+              (memorized-fn (try-other d ops)))
+            indexed-ops)
+       (filter #(finished? %))
+       first))
+;; => {:status :finished, :value 833}
