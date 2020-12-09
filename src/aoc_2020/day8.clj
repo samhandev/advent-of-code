@@ -16,7 +16,7 @@ acc +6")
 (defn parse [s]
   (->> (str/split-lines s)
        (map (fn [l]
-              (let [[op v](str/split l #" ")]
+              (let [[op v] (str/split l #" ")]
                 [op (edn/read-string v)])))))
 
 

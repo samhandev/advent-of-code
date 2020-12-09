@@ -1,6 +1,5 @@
 (ns aoc-2020.day5
-  (:require [aoc-2020.day5 :refer [sample-data]]
-            [aoc-2020.utils :as utils]
+  (:require [aoc-2020.utils :as utils]
             [clojure.string :as str]
             [clojure.test :refer [deftest is run-tests]]))
 
