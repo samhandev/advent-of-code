@@ -32,7 +32,8 @@
 (defn preable-sum [d n-preamble n]
   (let [numbers (subvec d (- n n-preamble) n)]
     (for [x numbers
-          y numbers]
+          y numbers
+          :when (< x y)]
       (+ x y))))
 
 (defn part-1 [d n-preamble]
@@ -65,5 +66,3 @@
 (defn part-2 [d target]
   (sum-min-max (contiguous-sum d target)))
 
-(let [d (vec (parse data))]
-  (part-2 d (part-1 d 25)))
