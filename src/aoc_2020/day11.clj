@@ -14,6 +14,9 @@ LLLLLLLLLL
 L.LLLLLL.L
 L.LLLLL.LL")
 
+(set! *warn-on-reflection* true)
+(set! *unchecked-math* :warn-on-boxed)
+
 (def data (utils/load-data 2020 11))
 
 (defn parse [s]
@@ -25,9 +28,9 @@ L.LLLLL.LL")
 (defn occupied-seat? [seat]
   (= \# seat))
 
-(defn neighbours [width height [x y]]
-  (for [x' [-1 0 1]
-        y'[-1 0 1]
+(defn neighbours [^long width ^long height [^long x ^long y]]
+  (for [^long x' [-1 0 1]
+        ^long y'[-1 0 1]
         :when (not= 0 x' y')
         :let [x'' (+ x x')
               y'' (+ y y')]
@@ -63,7 +66,7 @@ L.LLLLL.LL")
                              \L (if (= 0 adj-occupied)
                                   \#
                                   \L)
-                             \# (if (>= adj-occupied seat-limit)
+                             \# (if (>= ^long adj-occupied ^long seat-limit)
                                   \L
                                   \#)
                              seat)))
@@ -96,7 +99,7 @@ L.LLLLL.LL")
 )
 
 (def deltas
-  (for [x [-1 0 1]
+  (for [^long x [-1 0 1]
         y (if (zero? x) [-1 1] [-1 0 1])]
     [x y]))
 
@@ -116,7 +119,7 @@ L.LLLLL.LL")
 
 (defn line-of-sight-seats [d pos]
   (reduce (fn [^long cnt delta]
-            (if (>= cnt (:seat-limit d))
+            (if (>= cnt ^long (:seat-limit d))
               (reduced cnt)
               (if (#{\#} (line-of-sight d pos delta))
                 (inc cnt)
